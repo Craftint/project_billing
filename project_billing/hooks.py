@@ -13,16 +13,31 @@ app_license = "MIT"
 
 fixtures = [{"dt":"Custom Field",
 				"filters": [
-					["fieldname", "in",
-						("task_group", "billable_amount", "item", "billing_details","column_break_24", "uom",
-						"percent_billed", "reference_task", "billing_history", "past_billing_details", 
-						"task_progress", "retention_percentage", "retention_amount", "project_retention_amount",
-						"full_amount", "full_rate", "is_milestone")
+					["name", "in", (
+						"Task-task_item", "Task-task_item_uom",
+						"Task-task_item_group", "Task-billable_amount",
+						"Task-billing_details", "Task-percent_billed",
+						"Task-progress_billed","Task-column_break_24",
+						"Sales Invoice-billing_history", "Sales Invoice-project_billing_history",
+						"Sales Invoice Item-progress_billed", "Sales Invoice Item-percent_billed",
+						"Sales Invoice Item-billable_amount", "Sales Invoice Item-reference_task",
+						"Sales Invoice Item-task_progress", "Sales Invoice Item-full_amount",
+						"Sales Invoice Item-full_rate", "Sales Invoice Item-progress_qty",
+						"Sales Invoice Item-billable_amount",
+						"Project-retention_percentage", "Project-total_retention_amount",
+						"Project-advance_percentage",
+						"Project Template Task-task_item", "Project Template Task-task_item_uom",
+						"Project Template Task-task_item_group",
+						"Project Template Task-project_billing_fields_column_break",
+						"Project Template Task-project_template_description_section",
+						"Project Template Task-billable_amount", "Project Template Task-is_milestone",
+						"Sales Order-project_template", "Sales Order-sales_order_project_template_column_break"
+						)
 					]
 				]
 			},
 			{"dt":"Property Setter",
-				"filters": [["doc_type", "in", ("Task", "Project Template Task")]]
+				"filters": [["doc_type", "in", ("Project", "Task", "Project Template Task")]]
 			},
 			{"dt":"Print Format",
 				"filters": [["name", "=", ("Project Progressive Invoice")]]
@@ -32,7 +47,8 @@ fixtures = [{"dt":"Custom Field",
 doctype_js = {
 	"Sales Invoice": "public/js/sales_invoice.js",
 	"Project": "public/js/project.js",
-	"Task": "public/js/task.js"
+	"Task": "public/js/task.js",
+	"Sales Order": "public/js/sales_order.js"
 }
 
 doc_events = {
@@ -41,9 +57,15 @@ doc_events = {
 		"validate": "project_billing.project_billing.utils.validate_task_billing_details"
 	},
 	"Sales Invoice": {
-		"on_submit": "project_billing.project_billing.utils.update_task_billing_percentage",
-		"validate": "project_billing.project_billing.utils.validate_items_and_set_history"
-	}
+		"validate": "project_billing.project_billing.utils.validate_items_and_set_history",
+		"on_submit": "project_billing.project_billing.utils.update_project_and_task",
+		"on_cancel": "project_billing.project_billing.utils.update_project_and_task"
+	},
+	"Project Template": {
+		"validate": "project_billing.project_billing.utils.create_items_from_project_template",
+	},
+
+
 }
 
 # Includes in <head>

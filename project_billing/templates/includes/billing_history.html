@@ -4,7 +4,7 @@
 	<thead>
 		<tr>
 			<th class="text-left" style="width:30%">Project Task</th>
-			<th class="text-right" style="width:15%">Total Billable Amount</th>
+			<!-- <th class="text-right" style="width:15%">Total Billable Amount</th> -->
 			<th class="text-left" style="width:30%">Invoice Details</th>
 			<th class="text-right" style="width:10%">% Invoiced</th>
 			<th class="text-right" style="width:15%">Invoiced Amount</th>
@@ -15,11 +15,11 @@
 		<tr>
 			<td class="text-left" style="width:30%">
 				{{ item.get('item_code') }}
-				<br>Task #: {{ item.get('reference_task') }}
+				{% if item.get('reference_task') %}<br>Task #: {{ item.get('reference_task') }} {% endif %}
 			</td>
-			<td class="text-right" style="width:15%">
+			<!-- <td class="text-right" style="width:15%">
 				{{ frappe.utils.fmt_money(item.get('billable_amount') | abs, currency=currency) }}
-			</td>
+			</td> -->
 			<td class="text-left" style="width:30%">
 				{{ item.get('name') }} - {{ frappe.utils.formatdate(item.get('posting_date')) }} - {{ item.get('status') }}
 				<!-- <br>Outstanding Amount: {{ frappe.utils.fmt_money(item.get('outstanding_amount') | abs, currency=currency) }} -->
