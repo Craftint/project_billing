@@ -15,11 +15,14 @@ frappe.ui.form.on('Sales Order', {
                             conversion_factor: 1,
                             rate: (task.billable_amount / 100) * (frm.doc.conversion_rate / frm.doc.plc_conversion_rate),
                             amount: 100 * ((task.billable_amount / 100) * (frm.doc.conversion_rate / frm.doc.plc_conversion_rate)),
+                            plc_conversion_rate: frm.doc.plc_conversion_rate,
                             delivery_date: frm.doc.delivery_date
                         });
                     });
                     frm.refresh_field('items');
                 });
+        } else {
+            frm.refresh_field('items');
         }
     }
 });
