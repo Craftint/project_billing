@@ -49,7 +49,8 @@ doctype_js = {
 	"Sales Invoice": "public/js/sales_invoice.js",
 	"Project": "public/js/project.js",
 	"Task": "public/js/task.js",
-	"Sales Order": "public/js/sales_order.js"
+	"Sales Order": "public/js/sales_order.js",
+	"Project Template": "public/js/project_template.js"
 }
 
 doc_events = {
